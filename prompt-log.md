@@ -61,3 +61,35 @@
 - Constraints ยังไม่มีรายการที่ไม่ได้ใช้ แต่พฤติกรรมของ IDP/HIS และช่องทาง SMS/LINE ยังต้องรอคำตอบ `Q-05` และ `Q-06`
 - `AC-BKG-03`, `AC-BKG-04`, `AC-BKG-05`, `AC-BKG-06` ต้องจำลองระบบภายนอก การทำงานพร้อมกัน การวัด p95 และการตรวจ audit log จึงอาจทดสอบได้ยากในสภาพแวดล้อมของนักศึกษา
 - ไม่ได้เดาเกณฑ์ช่วงเวลาใกล้เคียง การจองซ้ำหลังใช้คิวเดิม พฤติกรรมเมื่อแพ็กเกจเปลี่ยน พฤติกรรมเมื่อ IDP/HIS ล้มเหลว การเลือกช่องทางแจ้งเตือน จุดจับเวลา 3 นาที หรือขอบเขต audit log เพราะติด `Q-01`, `Q-03` ถึง `Q-08`
+
+---
+
+## 2569-09-23 คำสั่ง: /tasks specs/001-booking/spec.md
+
+- เครื่องมือ: Copilot ใน Codespaces
+- ไฟล์: specs/001-booking/spec.md (Draft v2)
+- ผลลัพธ์: specs/001-booking/tasks.md
+
+### สรุปผลลัพธ์
+- สร้าง task ครบทั้งหมด 12 task โดยมี 1 task ที่ต้องรอ Q-02
+- task ที่ถือว่ายากที่สุดคือ `T-05` เพราะต้องรวม logic ของ slot full, 3 suggestion, วันเดียวกัน + วันถัดไป, และการป้องกันไม่ให้เกิดการจองซ้อนขณะอัปเดต remaining
+- AC ที่ทดสอบยากที่สุดในสภาพแวดล้อมนักศึกษาคือ `AC-BKG-05` และ `AC-BKG-04` ตามลำดับ เนื่องจากต้องจำลอง concurrency 200 คนและคิว asynchronous retry ในโครงสร้างที่ยังไม่มี Redis จริง วิธีทดสอบแบบย่อคือใช้ `pytest-xdist` หรือ coroutine pool สำหรับ 200 request พร้อมวัด p95 และใช้ queue mock ที่มี retry scheduler เวลา 5 นาที เพื่อยืนยันว่า booking ถูกบันทึกและมี record ใน retry queue
+
+### สิ่งที่คัดลอกจาก Open Questions
+- `Q-02` ยังไม่ตอบ จึงคง task `T-11` ไว้ในสถานะ `รอ Q-02` และไม่เดาแบบเลขคิว
+
+---
+
+## 2569-09-23 คำสั่ง: /implement T-01 specs/001-booking/tasks.md
+
+- เครื่องมือ: Copilot ใน Codespaces
+- ไฟล์: specs/001-booking/tasks.md
+- ผลลัพธ์: backend/app/config.py, backend/app/db/models.py, backend/app/db/migrations/001_init.py, backend/app/__init__.py, backend/app/db/__init__.py, backend/app/db/migrations/__init__.py, backend/tests/test_db_schema.py
+
+### ผล test
+- รัน: `cd backend && pytest tests/test_db_schema.py -q`
+- ผล: 2 passed in 0.35s
+
+### สิ่งที่เกือบต้องเดา แต่ถามแทน
+- ไม่มีความไม่ชัดเจนที่ต้องเดาเพิ่มเติมใน T-01 เพราะ spec.md และ plan.md ระบุชัดเจนว่าใช้ PostgreSQL, เก็บเฉพาะ HN, และต้องมีตาราง slots / bookings / audit_logs
+- จึงไม่จำเป็นต้องถามทีมเพิ่มก่อนปิดงาน
