@@ -80,6 +80,22 @@
 
 ---
 
+## 2569-09-23 คำสั่ง: /implement T-09 specs/001-booking/tasks.md
+
+- เครื่องมือ: Copilot ใน Codespaces
+- ไฟล์: specs/001-booking/tasks.md
+- ผลลัพธ์: frontend/src/pages/SlotPicker.jsx, frontend/src/App.jsx, frontend/src/__tests__/slot-picker.test.jsx
+
+### ผล test
+- รัน: `cd frontend && npm test`
+- ผล: 2 passed (2)
+
+### สิ่งที่เกือบต้องเดา แต่ถามแทน
+- ไม่พบความไม่ชัดเจนเพิ่มเติมใน T-09 เพราะ spec.md และ plan.md ระบุชัดเจนว่า frontend ต้องใช้ API จำลองเพื่อเลือกแพ็กเกจและดูช่วงเวลาว่างพร้อมจำนวนที่นั่งคงเหลือ
+- จึงไม่จำเป็นต้องถามทีมเพิ่มก่อนปิดงาน
+
+---
+
 ## 2569-09-23 คำสั่ง: /implement T-01 specs/001-booking/tasks.md
 
 - เครื่องมือ: Copilot ใน Codespaces
