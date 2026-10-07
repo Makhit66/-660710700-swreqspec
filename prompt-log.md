@@ -62,3 +62,13 @@
 - ผลลัพธ์: เขียน test สำหรับ AC-BKG-01 ที่สถานะ "ใช้ได้" ตาม test-cases.md จำนวน 3 ตัว
 - ไฟล์ที่แก้: backend/tests/test_AC_BKG_01.py
 - ผลลัพธ์การรัน: pytest tests/test_AC_BKG_01.py -q
+
+---
+
+## 2569-10-07 08:31 คำสั่ง: /verify specs/001-booking/
+
+- เครื่องมือ: Copilot ใน Codespaces (Agent, Auto)
+- ผล test: backend pytest -v = 7 passed, 0 failed; frontend npm test -- --run = 1 passed, 0 failed
+- สรุปสถานะตามรอยไปข้างหน้า: ครบ 4 แถว, ยังไม่ถึง 5 แถว, ช่องโหว่ 6 แถว, รอ Q-xx 0 แถว
+- ข้อค้นพบใหม่: F-001 ถึง F-007
+- ไฟล์ที่แก้: specs/001-booking/rtm.md
